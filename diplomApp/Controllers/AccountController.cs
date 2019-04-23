@@ -423,6 +423,11 @@ namespace diplomApp.Controllers
             base.Dispose(disposing);
         }
 
+        public ActionResult Profile()
+        {
+            return View();
+        }
+
         #region Вспомогательные приложения
         // Используется для защиты от XSRF-атак при добавлении внешних имен входа
         private const string XsrfKey = "XsrfId";

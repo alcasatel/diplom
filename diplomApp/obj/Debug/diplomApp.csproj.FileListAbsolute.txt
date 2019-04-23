@@ -106,3 +106,6 @@ C:\Users\alcas\source\repos\diplomApp\diplomApp\obj\Debug\diplomApp.csproj.CoreC
 C:\Users\alcas\source\repos\diplomApp\diplomApp\obj\Debug\diplomApp.csproj.CopyComplete
 C:\Users\alcas\source\repos\diplomApp\diplomApp\obj\Debug\diplomApp.dll
 C:\Users\alcas\source\repos\diplomApp\diplomApp\obj\Debug\diplomApp.pdb
+C:\Users\alcas\source\repos\diplomApp\diplomApp\obj\Debug\diplomApp.csprojAssemblyReference.cache
+C:\Users\alcas\source\repos\diplomApp\diplomApp\obj\Debug\diplomApp.Migrations.userInfo.resources
+C:\Users\alcas\source\repos\diplomApp\diplomApp\obj\Debug\diplomApp.csproj.GenerateResource.cache
