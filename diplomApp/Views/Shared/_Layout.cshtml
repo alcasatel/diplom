@@ -1,0 +1,160 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>@ViewBag.Title - Дипломная работа</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Play" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <div class="row page">
+
+            <header class="col d-none d-lg-block">
+                <a href="/"><div class="logo"><img src="/Content/images/logo.png" alt=""></div><hr></a>
+                <div class="about">Важнейшим элементом в процессе разработки приложения является выбор правильной IDE, зависящий не только от платформы, но и уровня собственной подготовки.</div>
+                <nav id='mobMenuLg'>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                @Html.ActionLink("Личный кабинет", "Profile", new { controller = "Account" }, new { @class = "nav-link active" })
+                            }
+                            else
+                            {
+                                @Html.ActionLink("Авторизация", "Login", new { controller = "Account" }, new { @class = "nav-link active" })
+                            }
+
+                        </li>
+                        <li class="nav-item">
+                            @Html.ActionLink("Новости", "News", "Home", new { @class = "nav-link active" })
+                        </li>
+                        <li class="nav-item">
+                            @Html.ActionLink("Статьи", "Articles", "Home", new { @class = "nav-link active" })
+                        </li>
+                        <li class="nav-item dropdown dropright">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Учебные материалы</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Separated link</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            @Html.ActionLink("Контроль", "Tests", "Home", new { @class = "nav-link active" })
+                        </li>
+
+                        <li class="nav-item">
+                            @Html.ActionLink("Обратная связь", "Feedback", "Home", new { @class = "nav-link active" })
+                        </li>
+                    </ul>
+                </nav>
+            </header>
+
+
+
+            <div class="col-lg-6 col-sm-8 content">
+                <div class="row d-lg-none">
+                    <div class="col-12 mobMenu">
+
+                        <nav class="navbar">
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mobMenuSm" aria-controls="mobMenuSm" aria-expanded="false" aria-label="Toggle navigation">
+                                <i class="fas fa-bars"></i>
+                            </button>
+                        </nav>
+
+                        <div id="mobMenuSm" class='collapse'> </div>
+                    </div>
+                </div>
+
+                @RenderBody()
+            </div>
+
+            <aside class="col .d-none .d-lg-block .d-xl-none">
+
+                <h4>Последние новости</h4><hr>
+                <ul class="news">
+                    <li><a href='#'> <img src="/Content/images/sidemenu.jpg"><h6>ВГСПУ началась преддипломная практика</h6><span>29 окт. 2019</span></a></li>
+                    <li><a href='#'> <img src="/Content/images/sidemenu.jpg"><h6>ВГСПУ началась преддипломная практика</h6><span>29 окт. 2019</span></a></li>
+                    <li><a href='#'> <img src="/Content/images/sidemenu.jpg"><h6>ВГСПУ началась преддипломная практика</h6><span>29 окт. 2019</span></a></li>
+                    <li><a href='#'> <img src="/Content/images/sidemenu.jpg"><h6>ВГСПУ началась преддипломная практика</h6><span>29 окт. 2019</span></a></li>
+                </ul><hr>
+
+                <ul class="articles">
+                    <li>
+                        <div class="imageblock">
+                            <img src='http://www.vokrugsveta.ru/img/cmn/2014/08/30/007.jpg'>
+                            <div class="overlay"></div>
+                            <h5 class='imagelabel blue'>Заголовок для картинки</h5>
+
+                        </div>
+                        <h5>Getting Started with Cascade Style Sheets & HTML5</h5>
+                        <span>29 окт. 2019</span>
+                    </li>
+
+                    <li>
+                        <div class="imageblock">
+                            <img src='https://bel.ru/attachments/fa92f60c657eb5f276bd66bc28c5d7b624915f36/store/fill/780/440/83eff6ba534fb82d75c0b0f93f8ee19257d848e1b5cdb0542042c0a88f56/cafcb647bacdf3fa6a0324c5f85d79db.jpg'>
+                            <div class="overlay"></div>
+                            <h5 class='imagelabel blue'>Заголовок для картинки</h5>
+
+                        </div>
+                        <h5>Getting Started with Cascade Style Sheets & HTML5</h5>
+                        <span>29 окт. 2019</span>
+                    </li>
+
+                    <li>
+                        <div class="imageblock">
+                            <img src='https://i.ytimg.com/vi/-6PdUhK1q3E/maxresdefault.jpg'>
+                            <div class="overlay"></div>
+                            <h5 class='imagelabel blue'>Заголовок для картинки</h5>
+
+                        </div>
+                        <h5>Getting Started with Cascade Style Sheets & HTML5</h5>
+                        <span>29 окт. 2019</span>
+                    </li>
+                </ul><hr>
+
+                <div class="social">
+                    <i class="fab fa-vk darkblue"></i>
+                    <i class="fab fa-instagram green"></i>
+                    <i class="fab fa-twitter blue"></i>
+                    <i class="fab fa-facebook-f darkblue"></i>
+                </div><hr>
+
+                <div class="tags">
+                    <h4>Тэги</h4>
+                    <div class="tag">Информатика</div>
+                    <div class="tag">Образование</div>
+                    <div class="tag">IDE</div>
+                    <div class="tag">Информатика</div>
+
+                </div><hr>
+
+            </aside>
+        </div>
+        <footer class="row">
+            <div class="col">Footer</div>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/scripts/jquery.js")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/userScript")
+    @RenderSection("scripts", required: false)
+
+</body>
+
+</html>

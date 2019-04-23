@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "Profile";
+}
+
+
+<div class="row text">
+    <div class="col-12">
+        <div class="mainimage">
+            <img src='/Content/images/profile.jpg'>
+            <span class='imagelabel green'>Личный кабинет</span>
+        </div>
+
+        <div class="profile" style="padding:40px;">
+            <h2>Личный кабинет</h2>
+
+            [ @Html.ActionLink("Выйти", "Logoff", new { controller = "Account" }) ]<hr />
+            <h4>Личные данные</h4>
+            [@Html.ActionLink("Редактировать", "EditUserData", new { controller = "Home" })] [@Html.ActionLink("Импорт данных из соц сети: Вконтакте", "RefreshUserData", new { controller = "Account" })]
+            <div class="userData">
+                <p><b>Логин: </b> @User.Identity.Name!</p>
+                <p><b>Ф.И.О.    : </b></p>
+                <p><b>Дата рождения: </b></p>
+                <p><b>Город: </b></p>
+                <p><b>Учебное заведение: </b></p>
+
+            </div>
+            <div class="userAvatar">
+                <img src="" />
+            </div>
+
+            <hr />
+        </div>
+
+    </div>
+</div>
+
