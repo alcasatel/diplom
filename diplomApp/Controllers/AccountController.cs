@@ -327,9 +327,14 @@ namespace diplomApp.Controllers
             {
                 return RedirectToAction("Login");
             }
+            string vkid = loginInfo.Login.ProviderKey;
+            HttpContext.Response.Cookies["vkid"].Value = vkid;
+
 
             // Выполнение входа пользователя посредством данного внешнего поставщика входа, если у пользователя уже есть имя входа
             var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
+
+            var id = User.Identity.GetUserId();
             switch (result)
             {
                 case SignInStatus.Success:
@@ -387,8 +392,7 @@ namespace diplomApp.Controllers
 
         //
         // POST: /Account/LogOff
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
@@ -442,45 +446,38 @@ namespace diplomApp.Controllers
         [HttpPost]
         public ActionResult EditUserData(AddintionalUserInfo  userData)
         {
-            AddintionalUserInfo newUser = (from c in db.AddintionalUserInfos
-                                        where c.Email == User.Identity.Name
-                                        select c).FirstOrDefault();
-            if (newUser == null)
-            {
-                //user = new AddintionalUserInfo();
-
-                db.AddintionalUserInfos.Add(userData);
-                db.SaveChanges();
-                return View("Profile", userData);
-            }
-            else
-            {
-                using(ApplicationDbContext db = new ApplicationDbContext())
-                {
-                    AddintionalUserInfo user = (from c in db.AddintionalUserInfos
-                                                where c.Email == User.Identity.Name
-                                                select c).FirstOrDefault();
-
-                    user = userData;
-                    db.SaveChanges();
-                    return View("Profile", user);
-                }
-                
-            }
-            
-            
+            var id = User.Identity.GetUserId();
+            userData.UserId = id;
+            db.Entry(userData).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Profile"); 
         }
 
         [HttpGet]
         public ActionResult Profile()
         {
+            return View(onUserLogin());
+        }
+
+        AddintionalUserInfo onUserLogin()
+        {
+            long vkid = long.Parse(HttpContext.Request.Cookies["vkid"].Value);
+
             AddintionalUserInfo user = (from c in db.AddintionalUserInfos
-                                        where c.Email == User.Identity.Name
+                                        where c.vkId == vkid
                                         select c).FirstOrDefault();
 
-            if (user == null) return View("Index","Home");
-            else
-                return View(user);
+            if (user == null)
+            {
+                user = new AddintionalUserInfo();
+                user.vkId = vkid;
+                user.Email = User.Identity.Name;
+                user.UserId = User.Identity.GetUserId();
+                db.AddintionalUserInfos.Add(user);
+                db.SaveChanges();
+            }
+
+            return user;
         }
 
         #region Вспомогательные приложения
@@ -505,6 +502,8 @@ namespace diplomApp.Controllers
 
         private ActionResult RedirectToLocal(string returnUrl)
         {
+            var id = User.Identity.GetUserId();
+
             if (Url.IsLocalUrl(returnUrl))
             {
                 return Redirect(returnUrl);
