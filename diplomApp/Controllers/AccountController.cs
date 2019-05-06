@@ -9,6 +9,13 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using diplomApp.Models;
+using VkNet;
+using VkNet.Model;
+using VkNet.Enums.Filters;
+using System.Net;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Drawing;
 
 namespace diplomApp.Controllers
 {
@@ -426,9 +433,44 @@ namespace diplomApp.Controllers
 
             base.Dispose(disposing);
         }
-        public ActionResult RefreshUserData()
+        public ActionResult RefreshUserDataFromVk()
         {
-            return View("Profile");
+            var api = new VkApi();
+
+            api.Authorize(new ApiAuthParams
+            {
+                ApplicationId = 123456,
+                AccessToken = "93763f3f08355bcd77ca454f056d1bf9c3306fef5441b0954467c2383bbf3e29834de7e0c0fa617020c49",
+                Settings = Settings.All
+            });
+
+            string currentUserId = User.Identity.GetUserId();
+            AddintionalUserInfo user = (from c in db.AddintionalUserInfos
+                                        where c.UserId == currentUserId
+                                        select c).FirstOrDefault();
+
+            var userVkData = api.Users.Get(new long[] { user.vkId }, ProfileFields.All).FirstOrDefault();
+
+            string url;
+
+            user.FullName = userVkData.FirstName + " " + userVkData.LastName;
+
+            if(userVkData!=null) user.DateOfBirth = Convert.ToDateTime(userVkData.BirthDate);
+
+            if(userVkData.City!=null) user.City = userVkData.City.Title.ToString();
+
+            if(userVkData.Education!=null) user.Education = userVkData.Education.ToString();
+
+            if (userVkData.Photo200 != null)
+            {
+                url = userVkData.Photo200.ToString();
+                user.PathToAvatar=downloadImageFromUrl(url);
+            }
+
+            db.Entry(user).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("Profile");
         }
 
         [HttpGet]
@@ -438,16 +480,22 @@ namespace diplomApp.Controllers
                                         where c.Email == User.Identity.Name
                                         select c).FirstOrDefault();
 
-            if (user == null) return View("Index", "Home");
-            else
-                return View(user);
+            return View(user);
         }
 
         [HttpPost]
-        public ActionResult EditUserData(AddintionalUserInfo  userData)
+        public ActionResult EditUserData(AddintionalUserInfo  userData, HttpPostedFileBase upload)
         {
             var id = User.Identity.GetUserId();
             userData.UserId = id;
+            if (upload != null)
+            {
+                // получаем имя файла
+                string fileName = "/content/useravatars/" + System.IO.Path.GetFileName(upload.FileName);
+                // сохраняем файл в папку Files в проекте
+                upload.SaveAs(Server.MapPath( fileName));
+                userData.PathToAvatar = fileName;
+            }
             db.Entry(userData).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Profile"); 
@@ -463,8 +511,10 @@ namespace diplomApp.Controllers
         {
             long vkid = long.Parse(HttpContext.Request.Cookies["vkid"].Value);
 
+            string userId = User.Identity.GetUserId();
+
             AddintionalUserInfo user = (from c in db.AddintionalUserInfos
-                                        where c.vkId == vkid
+                                        where c.UserId == userId
                                         select c).FirstOrDefault();
 
             if (user == null)
@@ -478,6 +528,27 @@ namespace diplomApp.Controllers
             }
 
             return user;
+        }
+
+
+
+        string downloadImageFromUrl(string imageUrl)
+        {
+            string fileName = @"/Content/useravatars/" + Path.GetRandomFileName()+".jpg";
+
+            using (WebClient client = new WebClient())
+            {
+                using(Stream stream = client.OpenRead(imageUrl))
+                {
+                    Bitmap bitmap; bitmap = new Bitmap(stream);
+                    
+                    if (bitmap != null) bitmap.Save(Server.MapPath(fileName));
+
+                    stream.Flush();
+                }
+            }
+
+            return fileName;
         }
 
         #region Вспомогательные приложения

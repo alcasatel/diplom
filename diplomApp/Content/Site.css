@@ -34,6 +34,43 @@ body {
     visibility: hidden;
 }
 
+#mobMenuSm ul{
+    width:60%;
+    margin:0 auto;
+    text-align:center;
+}
+
+#mobMenuSm img{
+    display:none;
+    float:none;
+}
+
+#mobMenuSm .userProfile span{
+    display:inline;
+    float:none;
+}
+
+.userProfile {
+    width: 100%;
+    height: 30px;
+    margin: 5px 0;
+    text-align: center;
+}
+
+.userProfile span{
+    display: block;
+    width: 125px;
+    float: right;
+}
+
+.userProfile img {
+        width: 30px;
+        height: 30px;
+        float: left;
+        margin: 0 10px;
+        float: right;
+        border-radius: 15px;
+    }
 /* Стили заголовка */
 header {
     padding-right: 30px;

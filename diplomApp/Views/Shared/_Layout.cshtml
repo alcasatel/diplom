@@ -24,15 +24,16 @@
                 <a href="/"><div class="logo"><img src="/Content/images/logo.png" alt=""></div><hr></a>
                 <div class="about">Важнейшим элементом в процессе разработки приложения является выбор правильной IDE, зависящий не только от платформы, но и уровня собственной подготовки.</div>
                 <nav id='mobMenuLg'>
+
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            @if (User.Identity.IsAuthenticated)
+                            @if (!User.Identity.IsAuthenticated)
                             {
-                                @Html.ActionLink("Личный кабинет", "Profile", new { controller = "Account" }, new { @class = "nav-link active" })
+                                @Html.ActionLink("Авторизация", "Login", new { controller = "Account" }, new { @class = "nav-link active" })
                             }
                             else
                             {
-                                @Html.ActionLink("Авторизация", "Login", new { controller = "Account" }, new { @class = "nav-link active" })
+                                Html.RenderAction("_userAvatar","Home");
                             }
 
                         </li>
@@ -150,7 +151,7 @@
         </footer>
     </div>
 
-    @Scripts.Render("~/scripts/jquery.js")
+    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/userScript")
     @RenderSection("scripts", required: false)

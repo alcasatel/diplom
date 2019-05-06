@@ -110,3 +110,16 @@ C:\Users\alcas\source\repos\diplomApp\diplomApp\obj\Debug\diplomApp.csprojAssemb
 C:\Users\alcas\source\repos\diplomApp\diplomApp\obj\Debug\diplomApp.Migrations.userInfo.resources
 C:\Users\alcas\source\repos\diplomApp\diplomApp\obj\Debug\diplomApp.csproj.GenerateResource.cache
 C:\Users\alcas\source\repos\diplomApp\diplomApp\obj\Debug\diplomApp.Migrations.dateTimeIsNull.resources
+C:\Users\alcas\source\repos\diplomApp\diplomApp\bin\HtmlAgilityPack.dll
+C:\Users\alcas\source\repos\diplomApp\diplomApp\bin\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\alcas\source\repos\diplomApp\diplomApp\bin\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\alcas\source\repos\diplomApp\diplomApp\bin\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\alcas\source\repos\diplomApp\diplomApp\bin\VkNet.dll
+C:\Users\alcas\source\repos\diplomApp\diplomApp\bin\HtmlAgilityPack.pdb
+C:\Users\alcas\source\repos\diplomApp\diplomApp\bin\HtmlAgilityPack.xml
+C:\Users\alcas\source\repos\diplomApp\diplomApp\bin\Microsoft.Extensions.DependencyInjection.xml
+C:\Users\alcas\source\repos\diplomApp\diplomApp\bin\Microsoft.Extensions.DependencyInjection.Abstractions.xml
+C:\Users\alcas\source\repos\diplomApp\diplomApp\bin\Microsoft.Extensions.Logging.Abstractions.xml
+C:\Users\alcas\source\repos\diplomApp\diplomApp\bin\Newtonsoft.Json.pdb
+C:\Users\alcas\source\repos\diplomApp\diplomApp\bin\VkNet.xml
+C:\Users\alcas\source\repos\diplomApp\diplomApp\obj\Debug\diplomApp.Migrations.addCityToUserData.resources

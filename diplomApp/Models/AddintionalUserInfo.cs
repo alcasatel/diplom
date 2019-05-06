@@ -26,6 +26,9 @@ namespace diplomApp.Models
         [Display(Name = "ФИО")]
         public string FullName { get; set; }
 
+        [Display(Name ="Город")]
+        public string City { get; set; }
+
         [Display(Name = "Дата рождения")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? DateOfBirth { get; set; }
