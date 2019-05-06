@@ -17,7 +17,7 @@ namespace diplomApp.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
+        ApplicationDbContext db = new ApplicationDbContext();
         public AccountController()
         {
         }
@@ -422,10 +422,65 @@ namespace diplomApp.Controllers
 
             base.Dispose(disposing);
         }
+        public ActionResult RefreshUserData()
+        {
+            return View("Profile");
+        }
 
+        [HttpGet]
+        public ActionResult EditUserData()
+        {
+            AddintionalUserInfo user = (from c in db.AddintionalUserInfos
+                                        where c.Email == User.Identity.Name
+                                        select c).FirstOrDefault();
+
+            if (user == null) return View("Index", "Home");
+            else
+                return View(user);
+        }
+
+        [HttpPost]
+        public ActionResult EditUserData(AddintionalUserInfo  userData)
+        {
+            AddintionalUserInfo newUser = (from c in db.AddintionalUserInfos
+                                        where c.Email == User.Identity.Name
+                                        select c).FirstOrDefault();
+            if (newUser == null)
+            {
+                //user = new AddintionalUserInfo();
+
+                db.AddintionalUserInfos.Add(userData);
+                db.SaveChanges();
+                return View("Profile", userData);
+            }
+            else
+            {
+                using(ApplicationDbContext db = new ApplicationDbContext())
+                {
+                    AddintionalUserInfo user = (from c in db.AddintionalUserInfos
+                                                where c.Email == User.Identity.Name
+                                                select c).FirstOrDefault();
+
+                    user = userData;
+                    db.SaveChanges();
+                    return View("Profile", user);
+                }
+                
+            }
+            
+            
+        }
+
+        [HttpGet]
         public ActionResult Profile()
         {
-            return View();
+            AddintionalUserInfo user = (from c in db.AddintionalUserInfos
+                                        where c.Email == User.Identity.Name
+                                        select c).FirstOrDefault();
+
+            if (user == null) return View("Index","Home");
+            else
+                return View(user);
         }
 
         #region Вспомогательные приложения
