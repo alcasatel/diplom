@@ -123,3 +123,4 @@ C:\Users\alcas\source\repos\diplomApp\diplomApp\bin\Microsoft.Extensions.Logging
 C:\Users\alcas\source\repos\diplomApp\diplomApp\bin\Newtonsoft.Json.pdb
 C:\Users\alcas\source\repos\diplomApp\diplomApp\bin\VkNet.xml
 C:\Users\alcas\source\repos\diplomApp\diplomApp\obj\Debug\diplomApp.Migrations.addCityToUserData.resources
+C:\Users\alcas\source\repos\diplomApp\diplomApp\obj\Debug\diplomApp.Migrations.uniqueIds.resources

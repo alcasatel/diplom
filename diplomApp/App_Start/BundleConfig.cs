@@ -23,14 +23,14 @@ namespace diplomApp
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/userScript").Include(
-                      "~/Scripts/userScript.js"));
+                      "~/Scripts/bootstrap.js",
+                        "~/Scripts/bootstrap-datepicker.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/bootstrap-datepicker3.css",
+                      "~/Content/site.css"
+                      ));
         }
     }
 }

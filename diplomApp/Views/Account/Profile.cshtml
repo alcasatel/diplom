@@ -20,67 +20,44 @@
             [@Html.ActionLink("Редактировать", "EditUserData", new { controller = "Account" })] 
             [@Html.ActionLink("Импорт данных из соц сети: Вконтакте", "RefreshUserDataFromVk", new { controller = "Account" },new { onclick = "return confirm('Выполнение данного действия может перезаписать ваши текущие данные. Вы действительно хотите это сделать?');" })]
             <div class="userData">
-
-                <dl class="dl-horizontal">
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Email)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.Email)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.FullName)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.FullName)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.DateOfBirth)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.DateOfBirth)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.City)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.City)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Education)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.Education)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.ResultPercent)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.ResultPercent)
-                    </dd>
-
-                </dl>
-            </div>
-
-        </div>
-        <div class="userAvatar">
-            <img src=" @Html.DisplayFor(model => model.PathToAvatar) " />
-        </div>
+                <table class="table">
+                    <tr>
+                        <td>@Html.DisplayNameFor(model => model.PathToAvatar)</td>
+                        <td><img src="@Html.DisplayFor(model => model.PathToAvatar)" style="width:450px;height:auto"/></td>
+                    </tr>
+                    <tr>
+                        <td>@Html.DisplayNameFor(model => model.Email)</td>
+                        <td>@Html.DisplayFor(model => model.Email)</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.DisplayNameFor(model => model.FullName)</td>
+                        <td>@Html.DisplayFor(model => model.FullName)</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.DisplayNameFor(model => model.DateOfBirth)</td>
+                        <td>@Html.DisplayFor(model => model.DateOfBirth)</td>
+                    </tr>
+                    <tr>
+                        <td> @Html.DisplayNameFor(model => model.City)</td>
+                        <td> @Html.DisplayFor(model => model.City)</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.DisplayNameFor(model => model.Education)</td>
+                        <td>@Html.DisplayFor(model => model.Education)</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.DisplayNameFor(model => model.ResultPercent)</td>
+                        <td>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar"style="width: @Html.DisplayFor(model => model.ResultPercent)%"  aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
 
         <hr />
     </div>
-
+</div></div>
 </div>
 
 

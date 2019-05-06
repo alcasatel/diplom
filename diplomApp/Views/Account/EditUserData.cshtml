@@ -10,12 +10,13 @@
 @using (Html.BeginForm("EditUserData", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+
 <div class="form-horizontal">
     <h4>Данные пользователя</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.vkId)
 
     <div class="form-group">
         @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -36,7 +37,8 @@
     <div class="form-group">
         @Html.LabelFor(model => model.DateOfBirth, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.DateOfBirth, new { htmlAttributes = new { @class = "form-control" } })
+            <input value="@Model.DateOfBirth" name="DateOfBirth" type="text" data-date-format='dd/mm/yy' id="selectdateadmin" class="form-control datepicker">
+
             @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -61,10 +63,13 @@
         @Html.LabelFor(model => model.PathToAvatar, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             <input type="file" name="upload" />
+            @Html.HiddenFor(model => model.PathToAvatar)
         </div>
-    </div>
 
-    <div class="form-group">
+</div>
+
+
+<div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Save" class="btn btn-default" />
         </div>
@@ -72,10 +77,27 @@
 </div>
 }
 
+
+
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        $(function () { // will trigger when the document is ready
+            $('#selectdateadmin').datepicker({
+                dateFormat: "dd/mm/yy",
+                showStatus: true,
+                showWeeks: true,
+                currentText: 'Now',
+                autoSize: true,
+                gotoCurrent: true,
+                showAnim: 'blind',
+                highlightWeek: true
+            }); //Initialise any date pickers
+        });
+    </script>
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -14,6 +15,7 @@ namespace diplomApp.Models
             PathToAvatar = "/content/images/default.png";
         }
 
+        [Index(IsUnique = true)]
         public int Id { get; set; }
 
         public string UserId { get; set; }
@@ -30,7 +32,7 @@ namespace diplomApp.Models
         public string City { get; set; }
 
         [Display(Name = "Дата рождения")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        [DataType(DataType.Date)]
         public DateTime? DateOfBirth { get; set; }
 
         [Display(Name = "Образование")]
@@ -39,6 +41,7 @@ namespace diplomApp.Models
         [Display(Name = "Результат прохождения курса")]
         public int ResultPercent { get; set; }
 
+        [Display(Name = "Аватар")]
         public string PathToAvatar { get; set; }
     }
 }

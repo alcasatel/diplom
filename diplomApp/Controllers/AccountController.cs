@@ -433,13 +433,14 @@ namespace diplomApp.Controllers
 
             base.Dispose(disposing);
         }
+
         public ActionResult RefreshUserDataFromVk()
         {
             var api = new VkApi();
 
             api.Authorize(new ApiAuthParams
             {
-                ApplicationId = 123456,
+                ApplicationId = 6955962,
                 AccessToken = "93763f3f08355bcd77ca454f056d1bf9c3306fef5441b0954467c2383bbf3e29834de7e0c0fa617020c49",
                 Settings = Settings.All
             });
@@ -490,9 +491,10 @@ namespace diplomApp.Controllers
             userData.UserId = id;
             if (upload != null)
             {
-                // получаем имя файла
-                string fileName = "/content/useravatars/" + System.IO.Path.GetFileName(upload.FileName);
-                // сохраняем файл в папку Files в проекте
+                string fileName = "/content/useravatars/" + User.Identity.GetUserId()+"."+ Path.GetExtension(upload.FileName);
+
+                if (System.IO.File.Exists(Server.MapPath(fileName))) System.IO.File.Delete(Server.MapPath(fileName));
+
                 upload.SaveAs(Server.MapPath( fileName));
                 userData.PathToAvatar = fileName;
             }
@@ -504,11 +506,8 @@ namespace diplomApp.Controllers
         [HttpGet]
         public ActionResult Profile()
         {
-            return View(onUserLogin());
-        }
+            
 
-        AddintionalUserInfo onUserLogin()
-        {
             long vkid = long.Parse(HttpContext.Request.Cookies["vkid"].Value);
 
             string userId = User.Identity.GetUserId();
@@ -520,28 +519,35 @@ namespace diplomApp.Controllers
             if (user == null)
             {
                 user = new AddintionalUserInfo();
-                user.vkId = vkid;
+                if(vkid!=0) user.vkId = vkid;
                 user.Email = User.Identity.Name;
                 user.UserId = User.Identity.GetUserId();
                 db.AddintionalUserInfos.Add(user);
                 db.SaveChanges();
             }
+            else
+            {
+                if (vkid != 0) user.vkId = vkid;
+                db.Entry(user).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }
 
-            return user;
+            return View(user);
         }
-
 
 
         string downloadImageFromUrl(string imageUrl)
         {
-            string fileName = @"/Content/useravatars/" + Path.GetRandomFileName()+".jpg";
+            string fileName = @"/Content/useravatars/" + User.Identity.GetUserId()+".jpg";
 
             using (WebClient client = new WebClient())
             {
                 using(Stream stream = client.OpenRead(imageUrl))
                 {
                     Bitmap bitmap; bitmap = new Bitmap(stream);
-                    
+
+                    if (System.IO.File.Exists(Server.MapPath(fileName))) System.IO.File.Delete(Server.MapPath(fileName));
+
                     if (bitmap != null) bitmap.Save(Server.MapPath(fileName));
 
                     stream.Flush();
