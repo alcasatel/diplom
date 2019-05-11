@@ -1,4 +1,4 @@
-﻿@model diplomApp.Models.AddintionalUserInfo
+﻿@model diplomApp.Models.User
 
 @{
     ViewBag.Title = "EditUserData";
@@ -15,7 +15,8 @@
     <h4>Данные пользователя</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.Id)
+    @*@Html.HiddenFor(model => model.Id)*@
+    @Html.HiddenFor(model => model.UserId)
     @Html.HiddenFor(model => model.vkId)
 
     <div class="form-group">
@@ -66,10 +67,10 @@
             @Html.HiddenFor(model => model.PathToAvatar)
         </div>
 
-</div>
+    </div>
 
 
-<div class="form-group">
+    <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Save" class="btn btn-default" />
         </div>

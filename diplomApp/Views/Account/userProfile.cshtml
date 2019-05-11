@@ -1,11 +1,8 @@
-﻿@model diplomApp.Models.AddintionalUserInfo
+﻿@model diplomApp.Models.User
 @{
     ViewBag.Title = "Profile";
 }
 
-
-<div class="row text">
-    <div class="col-12">
         <div class="mainimage">
             <img src='/Content/images/profile.jpg'>
             <span class='imagelabel green'>Личный кабинет</span>
@@ -14,16 +11,27 @@
         <div class="profile" style="padding:40px;">
             <h2>Личный кабинет</h2>
 
-            [ @Html.ActionLink("Выйти", "Logoff", new { controller = "Account" }) ]<hr />
+            [ @Html.ActionLink("Выйти", "Logoff", new { controller = "Account" }) ]
+
+            @if (User.IsInRole("admin"))
+            {
+                Html.RenderAction("_adminPanel", "Account");
+            }
 
             <h4>Личные данные</h4>
-            [@Html.ActionLink("Редактировать", "EditUserData", new { controller = "Account" })] 
-            [@Html.ActionLink("Импорт данных из соц сети: Вконтакте", "RefreshUserDataFromVk", new { controller = "Account" },new { onclick = "return confirm('Выполнение данного действия может перезаписать ваши текущие данные. Вы действительно хотите это сделать?');" })]
+            [@Html.ActionLink("Редактировать", "EditUserData", new { controller = "Account" })]
+            [@Html.ActionLink("Импорт данных из соц сети: Вконтакте", "RefreshUserDataFromVk", new { controller = "Account" }, new { onclick = "return confirm('Выполнение данного действия может перезаписать ваши текущие данные. Вы действительно хотите это сделать?');" })]
             <div class="userData">
                 <table class="table">
                     <tr>
+                        <td>Права доступа</td>
+                        <td>
+                            @if (User.IsInRole("admin")) { <p>Администратор</p>} else {<p>Студент</p> }
+                        </td>
+                    </tr>
+                    <tr>
                         <td>@Html.DisplayNameFor(model => model.PathToAvatar)</td>
-                        <td><img src="@Html.DisplayFor(model => model.PathToAvatar)" style="width:450px;height:auto"/></td>
+                        <td><img src="@Html.DisplayFor(model => model.PathToAvatar)" style="width:150px;height:auto" /></td>
                     </tr>
                     <tr>
                         <td>@Html.DisplayNameFor(model => model.Email)</td>
@@ -49,15 +57,14 @@
                         <td>@Html.DisplayNameFor(model => model.ResultPercent)</td>
                         <td>
                             <div class="progress">
-                                <div class="progress-bar" role="progressbar"style="width: @Html.DisplayFor(model => model.ResultPercent)%"  aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress-bar" role="progressbar" style="width: @Html.DisplayFor(model => model.ResultPercent)%" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </td>
                     </tr>
-                </table>
+                </table><hr />
 
-        <hr />
-    </div>
-</div></div>
-</div>
 
+
+            </div>
+        </div>
 

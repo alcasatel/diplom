@@ -20,7 +20,11 @@ namespace diplomApp.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public virtual DbSet<AddintionalUserInfo> AddintionalUserInfos { get; set; }
+        public virtual DbSet<User> AddintionalUserInfos { get; set; }
+        public virtual DbSet<Material> Materials { get; set; }
+        public virtual DbSet<MaterialType> MaterialTypes { get; set; }
+        public virtual DbSet<Lesson> Lessons { get; set; }
+        public virtual DbSet<Result> Results { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

@@ -29,6 +29,8 @@ namespace diplomApp.Controllers
         {
         }
 
+        #region Account Authorize methods
+
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
         {
             UserManager = userManager;
@@ -433,8 +435,11 @@ namespace diplomApp.Controllers
 
             base.Dispose(disposing);
         }
+        #endregion
 
-        public ActionResult RefreshUserDataFromVk()
+        #region vk connection methods
+
+        public VkNet.Model.User getVkUser(long vkId)
         {
             var api = new VkApi();
 
@@ -445,12 +450,16 @@ namespace diplomApp.Controllers
                 Settings = Settings.All
             });
 
-            string currentUserId = User.Identity.GetUserId();
-            AddintionalUserInfo user = (from c in db.AddintionalUserInfos
-                                        where c.UserId == currentUserId
-                                        select c).FirstOrDefault();
+            var userVkData = api.Users.Get(new long[] { vkId }, ProfileFields.All).FirstOrDefault();
 
-            var userVkData = api.Users.Get(new long[] { user.vkId }, ProfileFields.All).FirstOrDefault();
+            return userVkData;
+        }
+
+        public ActionResult RefreshUserDataFromVk()
+        {
+            Models.User user = getCurrentUser();
+
+            var userVkData = getVkUser(user.vkId);
 
             string url;
 
@@ -468,81 +477,107 @@ namespace diplomApp.Controllers
                 user.PathToAvatar=downloadImageFromUrl(url);
             }
 
-            db.Entry(user).State = System.Data.Entity.EntityState.Modified;
-            db.SaveChanges();
+            saveDbChanges(user);
 
-            return RedirectToAction("Profile");
+            return RedirectToAction("userProfile");
         }
 
+        #endregion
+
+        #region user profile methods
         [HttpGet]
         public ActionResult EditUserData()
         {
-            AddintionalUserInfo user = (from c in db.AddintionalUserInfos
-                                        where c.Email == User.Identity.Name
-                                        select c).FirstOrDefault();
+            Models.User user = getCurrentUser();
 
             return View(user);
         }
 
         [HttpPost]
-        public ActionResult EditUserData(AddintionalUserInfo  userData, HttpPostedFileBase upload)
+        public ActionResult EditUserData(Models.User  userData, HttpPostedFileBase upload)
         {
-            var id = User.Identity.GetUserId();
-            userData.UserId = id;
             if (upload != null)
             {
-                string fileName = "/content/useravatars/" + User.Identity.GetUserId()+"."+ Path.GetExtension(upload.FileName);
+                string fileName = "/content/useravatars/" + User.Identity.GetUserId()+ Path.GetExtension(upload.FileName);
 
                 if (System.IO.File.Exists(Server.MapPath(fileName))) System.IO.File.Delete(Server.MapPath(fileName));
 
                 upload.SaveAs(Server.MapPath( fileName));
                 userData.PathToAvatar = fileName;
             }
-            db.Entry(userData).State = System.Data.Entity.EntityState.Modified;
-            db.SaveChanges();
-            return RedirectToAction("Profile"); 
+
+            saveDbChanges(userData);
+            return RedirectToAction("userProfile"); 
         }
 
         [HttpGet]
-        public ActionResult Profile()
+        public ActionResult userProfile()
         {
-            
-
-            long vkid = long.Parse(HttpContext.Request.Cookies["vkid"].Value);
-
-            string userId = User.Identity.GetUserId();
-
-            AddintionalUserInfo user = (from c in db.AddintionalUserInfos
-                                        where c.UserId == userId
-                                        select c).FirstOrDefault();
+            Models.User user = getCurrentUser();
 
             if (user == null)
             {
-                user = new AddintionalUserInfo();
-                if(vkid!=0) user.vkId = vkid;
-                user.Email = User.Identity.Name;
-                user.UserId = User.Identity.GetUserId();
-                db.AddintionalUserInfos.Add(user);
-                db.SaveChanges();
-            }
-            else
-            {
-                if (vkid != 0) user.vkId = vkid;
-                db.Entry(user).State = System.Data.Entity.EntityState.Modified;
-                db.SaveChanges();
+                user = createNewUser();
             }
 
             return View(user);
         }
 
+        public ActionResult _userAvatar()
+        {
+            Models.User user = getCurrentUser();
+
+            return PartialView(user);
+        }
+
+        public Models.User createNewUser()
+        {
+            Models.User user = new Models.User();
+
+            long vkid = long.Parse(HttpContext.Request.Cookies["vkid"].Value);
+
+            if (vkid != 0) user.vkId = vkid;
+            user.Email = User.Identity.Name;
+            user.UserId = User.Identity.GetUserId();
+
+            db.AddintionalUserInfos.Add(user);
+            db.SaveChanges();
+
+            return user;
+        }
+        public void saveDbChanges(Models.User userData)
+        {
+            db.Entry(userData).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
+        }
+
+        public Models.User getCurrentUser()
+        {
+            string userId = User.Identity.GetUserId();
+
+            Models.User currentUser = (from c in db.AddintionalUserInfos
+                                        where c.UserId == userId
+                                        select c).FirstOrDefault();
+            return currentUser;
+        }
+
+        [Authorize(Roles ="admin")]
+        public ActionResult _adminPanel()
+        {
+            return PartialView();
+        }
+
+        #endregion
+
+        #region Вспомогательные приложения
 
         string downloadImageFromUrl(string imageUrl)
         {
-            string fileName = @"/Content/useravatars/" + User.Identity.GetUserId()+".jpg";
+            string fileName = @"/Content/useravatars/" + User.Identity.GetUserId() + ".jpg";
 
             using (WebClient client = new WebClient())
             {
-                using(Stream stream = client.OpenRead(imageUrl))
+                using (Stream stream = client.OpenRead(imageUrl))
                 {
                     Bitmap bitmap; bitmap = new Bitmap(stream);
 
@@ -557,7 +592,6 @@ namespace diplomApp.Controllers
             return fileName;
         }
 
-        #region Вспомогательные приложения
         // Используется для защиты от XSRF-атак при добавлении внешних имен входа
         private const string XsrfKey = "XsrfId";
 

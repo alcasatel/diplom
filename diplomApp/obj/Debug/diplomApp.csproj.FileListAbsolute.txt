@@ -124,3 +124,7 @@ C:\Users\alcas\source\repos\diplomApp\diplomApp\bin\Newtonsoft.Json.pdb
 C:\Users\alcas\source\repos\diplomApp\diplomApp\bin\VkNet.xml
 C:\Users\alcas\source\repos\diplomApp\diplomApp\obj\Debug\diplomApp.Migrations.addCityToUserData.resources
 C:\Users\alcas\source\repos\diplomApp\diplomApp\obj\Debug\diplomApp.Migrations.uniqueIds.resources
+C:\Users\alcas\source\repos\diplomApp\diplomApp\obj\Debug\diplomApp.Migrations.materials.resources
+C:\Users\alcas\source\repos\diplomApp\diplomApp\obj\Debug\diplomApp.Migrations.role.resources
+C:\Users\alcas\source\repos\diplomApp\diplomApp\obj\Debug\diplomApp.Migrations.materialcategory.resources
+C:\Users\alcas\source\repos\diplomApp\diplomApp\obj\Debug\diplomApp.Migrations.role20.resources

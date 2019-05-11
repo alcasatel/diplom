@@ -33,12 +33,12 @@
                             }
                             else
                             {
-                                Html.RenderAction("_userAvatar","Home");
+                                Html.RenderAction("_userAvatar", "Account");
                             }
 
                         </li>
                         <li class="nav-item">
-                            @Html.ActionLink("Новости", "News", "Home", new { @class = "nav-link active" })
+                            @Html.ActionLink("Новости", "News", "Materials", new { @class = "nav-link active" })
                         </li>
                         <li class="nav-item">
                             @Html.ActionLink("Статьи", "Articles", "Home", new { @class = "nav-link active" })
@@ -79,77 +79,74 @@
                         <div id="mobMenuSm" class='collapse'> </div>
                     </div>
                 </div>
-
-                @RenderBody()
+                <div class="row text">
+                    <div class="col-12">
+                        @RenderBody()
+                    </div>
+                </div>
             </div>
 
-            <aside class="col .d-none .d-lg-block .d-xl-none">
+                    <aside class="col .d-none .d-lg-block .d-xl-none">
 
-                <h4>Последние новости</h4><hr>
-                <ul class="news">
-                    <li><a href='#'> <img src="/Content/images/sidemenu.jpg"><h6>ВГСПУ началась преддипломная практика</h6><span>29 окт. 2019</span></a></li>
-                    <li><a href='#'> <img src="/Content/images/sidemenu.jpg"><h6>ВГСПУ началась преддипломная практика</h6><span>29 окт. 2019</span></a></li>
-                    <li><a href='#'> <img src="/Content/images/sidemenu.jpg"><h6>ВГСПУ началась преддипломная практика</h6><span>29 окт. 2019</span></a></li>
-                    <li><a href='#'> <img src="/Content/images/sidemenu.jpg"><h6>ВГСПУ началась преддипломная практика</h6><span>29 окт. 2019</span></a></li>
-                </ul><hr>
+                        @{Html.RenderAction("_newsBlock", "Materials");}
 
-                <ul class="articles">
-                    <li>
-                        <div class="imageblock">
-                            <img src='http://www.vokrugsveta.ru/img/cmn/2014/08/30/007.jpg'>
-                            <div class="overlay"></div>
-                            <h5 class='imagelabel blue'>Заголовок для картинки</h5>
+                        <ul class="articles">
+                            <li>
+                                <div class="imageblock">
+                                    <img src='http://www.vokrugsveta.ru/img/cmn/2014/08/30/007.jpg'>
+                                    <div class="overlay"></div>
+                                    <h5 class='imagelabel blue'>Заголовок для картинки</h5>
 
-                        </div>
-                        <h5>Getting Started with Cascade Style Sheets & HTML5</h5>
-                        <span>29 окт. 2019</span>
-                    </li>
+                                </div>
+                                <h5>Getting Started with Cascade Style Sheets & HTML5</h5>
+                                <span>29 окт. 2019</span>
+                            </li>
 
-                    <li>
-                        <div class="imageblock">
-                            <img src='https://bel.ru/attachments/fa92f60c657eb5f276bd66bc28c5d7b624915f36/store/fill/780/440/83eff6ba534fb82d75c0b0f93f8ee19257d848e1b5cdb0542042c0a88f56/cafcb647bacdf3fa6a0324c5f85d79db.jpg'>
-                            <div class="overlay"></div>
-                            <h5 class='imagelabel blue'>Заголовок для картинки</h5>
+                            <li>
+                                <div class="imageblock">
+                                    <img src='https://bel.ru/attachments/fa92f60c657eb5f276bd66bc28c5d7b624915f36/store/fill/780/440/83eff6ba534fb82d75c0b0f93f8ee19257d848e1b5cdb0542042c0a88f56/cafcb647bacdf3fa6a0324c5f85d79db.jpg'>
+                                    <div class="overlay"></div>
+                                    <h5 class='imagelabel blue'>Заголовок для картинки</h5>
 
-                        </div>
-                        <h5>Getting Started with Cascade Style Sheets & HTML5</h5>
-                        <span>29 окт. 2019</span>
-                    </li>
+                                </div>
+                                <h5>Getting Started with Cascade Style Sheets & HTML5</h5>
+                                <span>29 окт. 2019</span>
+                            </li>
 
-                    <li>
-                        <div class="imageblock">
-                            <img src='https://i.ytimg.com/vi/-6PdUhK1q3E/maxresdefault.jpg'>
-                            <div class="overlay"></div>
-                            <h5 class='imagelabel blue'>Заголовок для картинки</h5>
+                            <li>
+                                <div class="imageblock">
+                                    <img src='https://i.ytimg.com/vi/-6PdUhK1q3E/maxresdefault.jpg'>
+                                    <div class="overlay"></div>
+                                    <h5 class='imagelabel blue'>Заголовок для картинки</h5>
 
-                        </div>
-                        <h5>Getting Started with Cascade Style Sheets & HTML5</h5>
-                        <span>29 окт. 2019</span>
-                    </li>
-                </ul><hr>
+                                </div>
+                                <h5>Getting Started with Cascade Style Sheets & HTML5</h5>
+                                <span>29 окт. 2019</span>
+                            </li>
+                        </ul><hr>
 
-                <div class="social">
-                    <i class="fab fa-vk darkblue"></i>
-                    <i class="fab fa-instagram green"></i>
-                    <i class="fab fa-twitter blue"></i>
-                    <i class="fab fa-facebook-f darkblue"></i>
-                </div><hr>
+                        <div class="social">
+                            <i class="fab fa-vk darkblue"></i>
+                            <i class="fab fa-instagram green"></i>
+                            <i class="fab fa-twitter blue"></i>
+                            <i class="fab fa-facebook-f darkblue"></i>
+                        </div><hr>
 
-                <div class="tags">
-                    <h4>Тэги</h4>
-                    <div class="tag">Информатика</div>
-                    <div class="tag">Образование</div>
-                    <div class="tag">IDE</div>
-                    <div class="tag">Информатика</div>
+                        <div class="tags">
+                            <h4>Тэги</h4>
+                            <div class="tag">Информатика</div>
+                            <div class="tag">Образование</div>
+                            <div class="tag">IDE</div>
+                            <div class="tag">Информатика</div>
 
-                </div><hr>
+                        </div><hr>
 
-            </aside>
-        </div>
-        <footer class="row">
-            <div class="col">Footer</div>
-        </footer>
-    </div>
+                    </aside>
+                </div>
+                <footer class="row">
+                    <div class="col">Footer</div>
+                </footer>
+            </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

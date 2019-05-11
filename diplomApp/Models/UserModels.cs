@@ -7,14 +7,8 @@ using System.Web;
 
 namespace diplomApp.Models
 {
-    public class AddintionalUserInfo
+    public class User
     {
-        public AddintionalUserInfo()
-        {
-            ResultPercent = 0;
-            PathToAvatar = "/content/images/default.png";
-        }
-
         [Index(IsUnique = true)]
         public int Id { get; set; }
 
@@ -43,5 +37,17 @@ namespace diplomApp.Models
 
         [Display(Name = "Аватар")]
         public string PathToAvatar { get; set; }
+
+        public ICollection<Result> Results { get; set; }
+
+        public User()
+        {
+            ResultPercent = 0;
+            PathToAvatar = "/content/images/default.png";
+            Results = new List<Result>();
+        }
+
+        
     }
+
 }

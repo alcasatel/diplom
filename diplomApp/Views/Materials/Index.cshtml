@@ -1,0 +1,45 @@
+﻿@model IEnumerable<diplomApp.Models.Material>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+        <div class="mainimage">
+            <img src='/Content/images/profile.jpg'>
+            <span class='imagelabel green'>Все материалы</span>
+        </div>
+        <div style="padding:40px;">
+            @if (User.IsInRole("admin"))
+            {
+                @Html.ActionLink("Добавить материал", "Create", "Materials")
+                @: <hr />
+            }
+            <h3>@ViewBag.MaterialTitle</h3>
+            @foreach (var item in Model)
+            {
+                <div class="row newsArticle" >
+                    <div class="col-xl-5">
+                        <div class="newsimg">
+                            <img src='@item.Image'>
+                            <span class='imagelabel blue'>@item.Category</span>
+                        </div>
+                    </div>
+                    <div class="col-xl-7">
+                        <h4>@item.Name</h4>
+                        <p>
+                            @item.Annotation
+                        </p>
+                        @Html.ActionLink("Подробнее", "News", "Materials", new { id = item.Id }, null)
+                        @if (User.IsInRole("admin"))
+                        {
+                            @: |
+                            @Html.ActionLink("Редактировать", "Edit", "Materials", new { id = item.Id }, null)
+                            @: |
+                            @Html.ActionLink("Удалить", "Delete", "Materials", new { id = item.Id }, null)
+                        }
+                    </div>
+                </div><hr />
+            }
+        </div>
+
+      

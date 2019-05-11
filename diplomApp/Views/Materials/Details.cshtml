@@ -1,0 +1,22 @@
+﻿@model diplomApp.Models.Material
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="mainimage">
+    <img src='@Model.Image'>
+    <span class='imagelabel green'>Новости</span>
+</div>
+<div class="article">
+    <h2>@Model.Name</h2>
+    <i class="date">@Model.CreationDate</i><hr />
+
+    @RenderPage(Model.PathToPageContent)
+
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("К списку новостей", "Index")
+    </p>
+</div>
+

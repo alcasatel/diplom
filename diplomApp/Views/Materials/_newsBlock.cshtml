@@ -1,0 +1,10 @@
+﻿@model IEnumerable<diplomApp.Models.Material>
+
+@Html.ActionLink("Последние новости", "Index", "Materials")<hr>
+<ul class="news">
+    @foreach (var item in Model)
+    {
+        <li><a href='Material/Details/@item.Id'> <img src="@item.Image"><h6>@item.Name</h6><span>@item.CreationDate</span></a></li>
+    }
+</ul>
+<hr>

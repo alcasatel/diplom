@@ -321,6 +321,8 @@ aside {
     margin: 0 auto;
 }
 
+
+
 .mainimage {
     margin: 0;
     width: 100%;
@@ -355,6 +357,7 @@ aside {
 .newsimg {
     position: relative;
     height: 200px;
+    overflow:hidden;
 }
 
     .newsimg img {

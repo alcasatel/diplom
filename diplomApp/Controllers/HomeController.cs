@@ -31,14 +31,6 @@ namespace diplomApp.Controllers
             return View();
         }
 
-        public ActionResult _userAvatar()
-        {
-            string userId = User.Identity.GetUserId();
 
-            AddintionalUserInfo user = (from c in db.AddintionalUserInfos
-                                        where c.UserId == userId
-                                        select c).FirstOrDefault();
-            return PartialView(user);
-        }
     }
 }
